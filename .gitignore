@@ -5,3 +5,4 @@ static/
 *.sqlite3
 node_modules/
 tags
+*.tags
