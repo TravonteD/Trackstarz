@@ -1,7 +1,7 @@
 *.pyc
-
 settings.py
-
 *.json
-
 static/
+*.sqlite3
+node_modules/
+tags
