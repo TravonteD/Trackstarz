@@ -1,10 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 
-class User(models.Model):
-    username = models.CharField(max_length=50)
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     displayname = models.CharField(max_length=50)
-    email = models.EmailField()
     # TODO: Figure out what the start field is for
     startdate = models.DateField(default = timezone.now)
     coverphoto = models.ImageField(
@@ -26,14 +28,28 @@ class User(models.Model):
     friends = models.ManyToManyField('self', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.displayname
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('user-show', args=[str(self.id)])
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 
 class Post(models.Model):
     title = models.CharField(max_length=50)
     content = models.CharField(max_length=256)
-    author = models.ForeignKey('User', on_delete=models.PROTECT, blank=True, null=True)
-    likes = models.ManyToManyField('User', related_name = 'liked_posts')
+    author = models.ForeignKey('Profile', on_delete=models.PROTECT, blank=True, null=True)
+    likes = models.ManyToManyField('Profile', related_name = 'liked_posts')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
@@ -41,9 +57,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
     content = models.CharField(max_length=256)
-    author = models.ForeignKey('User', on_delete=models.PROTECT)
+    author = models.ForeignKey('Profile', on_delete=models.PROTECT)
     post = models.ForeignKey('Post', on_delete=models.PROTECT)
-    likes = models.ManyToManyField('User', related_name='liked_comments')
+    likes = models.ManyToManyField('Profile', related_name='liked_comments')
     replies = models.ManyToManyField('self')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
