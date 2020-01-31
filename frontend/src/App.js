@@ -1,34 +1,25 @@
 import React from 'react';
+import Header from './components/Header.js'
+import ProfileLeft from './components/ProfileLeft.js'
+import ProfileRight from './components/ProfileRight.js'
+import Hero from './components/Hero.js'
+import Feed from './components/Feed.js'
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <Header/>
+      <Hero/>
+      <div className='container app__content'>
+        <div className='row'>
+          <ProfileLeft/>
+          <Feed/>
+          <ProfileRight/>
+        </div>
+      </div>
     </div>
-  );
-}
-
-class Header extends React.Component {
-  render() {
-    return (
-      <header className="trackstarz__header">
-      <Menu/>
-      </header>
-    )
-  }
-}
-
-class Menu extends React.Component {
-  render() {
-    return (
-      <nav className="trackstarz__header__nav">
-        <li className="trackstarz__header_nav_item">Home</li>
-        <li>About</li>
-        <li>Universe</li>
-      </nav>
-    )
-  }
+  )
 }
 
 export default App;
