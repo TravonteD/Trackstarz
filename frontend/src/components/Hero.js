@@ -3,7 +3,7 @@ import hero from '../images/New-Logo-Youtube-2.png';
 
 function Hero() {
   return (
-    <img className='hero' src={hero}/>
+    <img className='hero' src={hero} alt=''/>
   )
 }
 

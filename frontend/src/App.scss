@@ -1,10 +1,40 @@
 @charset 'utf-8';
 
+$border: solid #888 0.5px;
 @mixin card {
   background: white;
 }
+
 @mixin title {
   font-size: 21px;
+}
+
+@mixin dark {
+  background: #000;
+  color: #fff;
+}
+
+@mixin light {
+  background: #fff;
+  color: #000;
+}
+
+@mixin form {
+  margin: auto;
+  margin-top: 50px;
+  text-align: center;
+  &__title {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+  &__input {
+    margin-bottom: 20px;
+  }
+  &__btn {
+    @include dark;
+    border: none;
+    margin-bottom: 20px;
+  }
 }
 
 .app {
@@ -17,8 +47,7 @@
 
 .trackstarz {
   &__header {
-    background: black;
-    color: white;
+    @include dark;
     &--img {
       height: 40px;
     }
@@ -28,6 +57,9 @@
 .mainmenu {
   &__item {
     padding: 20px;
+    &--link {
+      color: #fff;
+    }
   }
 }
 
@@ -39,7 +71,7 @@
 
 .imagecard {
   @include card;
-  color: black;
+  @include light;
   &__content {
     padding: 10px;
   }
@@ -65,14 +97,14 @@
       height: 40px;
       padding: 10px;
       margin-top: 10px;
+      border-radius: 5px;
     }
     &--submit, &--upload {
-      // TODO: replace with btn-primary
-      background: gray;
-      color: white;
-      padding: 10px;
-      height: 40px;
-      border-radius: 5px;
+      @include dark;
+      border: none;
+    }
+    &--submit {
+      margin-left: 20px;
     }
   }
 }
@@ -92,7 +124,6 @@
 }
 
 .feed {
-  $border: solid #888 0.5px;
   &__card {
     @include card;
     margin: 20px 0px;
@@ -111,11 +142,13 @@
       font-weight: bold;
       padding: 0px 5px;
       font-size: 14px;
+      color: #000;
     }
     &--at {
       font-weight: bold;
       padding: 0px 5px;
       font-size: 11.2px;
+      color: #000;
     }
     &--date {
       padding: 0px 5px;
@@ -143,4 +176,12 @@
       padding: 10px;
     }
   }
+}
+
+.login-form {
+  @include form;
+}
+
+.create-user-form {
+  @include form;
 }

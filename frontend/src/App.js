@@ -1,25 +1,34 @@
-import React from 'react';
-import Header from './components/Header.js'
-import ProfileLeft from './components/ProfileLeft.js'
-import ProfileRight from './components/ProfileRight.js'
-import Hero from './components/Hero.js'
-import Feed from './components/Feed.js'
+import React from 'react'
+import Home from './components/Home.js'
+import Menu from './components/Menu.js'
+import Login from './components/Login.js'
+import CreateAccount from './components/CreateAccount.js'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom'
 import './App.css';
 
-function App() {
-  return (
-    <div className="app">
-      <Header/>
-      <Hero/>
-      <div className='container app__content'>
-        <div className='row'>
-          <ProfileLeft/>
-          <Feed/>
-          <ProfileRight/>
-        </div>
-      </div>
-    </div>
-  )
+class App extends React.Component {
+  render() {
+    return (
+      <Router>
+        <Menu/>
+        <Switch>
+          <Route path='/newuser'>
+            <CreateAccount />
+          </Route>
+          <Route path='/login'>
+            <Login/>
+          </Route>
+          <Route path='/'>
+            <Home/>
+          </Route>
+        </Switch>
+      </Router>
+    )
+  }
 }
 
 export default App;
