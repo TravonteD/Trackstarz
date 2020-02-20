@@ -46,7 +46,6 @@ function Login() {
   function login() {
     const username = document.getElementById('login-form--username').value
     const password = document.getElementById('login-form--password').value
-    console.log(username, password)
     api.authenticate(username, password)
   }
 }
